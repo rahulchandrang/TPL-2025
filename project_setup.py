@@ -9,6 +9,7 @@ from azure.keyvault.secrets import SecretClient
 import time
 import re
 from functools import wraps
+import yaml
 
 # --- Project Structure Creation ---
 PROJECT_STRUCTURE = [
@@ -22,14 +23,21 @@ PROJECT_STRUCTURE = [
     "src/pipelines",
     "src/utils",
     "src/mlflow_integration",
+    "models",
     "tests"
 ]
 
 def create_project_structure(base_path="."):
+    """
+    Creates the standard project folder structure.
+    """
     for folder in PROJECT_STRUCTURE:
         path = os.path.join(base_path, folder)
-        os.makedirs(path, exist_ok=True)
-    print("Project structure created.")
+        try:
+            os.makedirs(path, exist_ok=True)
+            logger.info({"msg": f"Created directory: {path}"})
+        except Exception as e:
+            logger.error({"msg": f"Failed to create directory: {path}", "error": str(e)})
 
 # --- Structured Logging with JSON & Azure App Insights ---
 class AppInsightsHandler(logging.Handler):
@@ -41,6 +49,11 @@ class AppInsightsHandler(logging.Handler):
         pass
 
 def setup_logging():
+    """
+    Sets up structured JSON logging and Azure App Insights handler.
+    """
+    # Ensure config directory exists
+    os.makedirs("config", exist_ok=True)
     logger = logging.getLogger("ml_project")
     logger.setLevel(logging.INFO)
     logHandler = logging.StreamHandler()
@@ -61,6 +74,9 @@ class RetryException(MLProjectException):
     """Exception for retryable errors."""
 
 def retry(max_attempts=3, delay=2, exceptions=(Exception,)):
+    """
+    Retry decorator for handling transient errors.
+    """
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -93,7 +109,9 @@ class AzureKeyVaultManager:
 
 # --- Utility Functions ---
 def rate_limiter(max_calls, period=1.0):
-    """Simple rate limiter decorator."""
+    """
+    Simple rate limiter decorator.
+    """
     def decorator(func):
         last_reset = [time.time()]
         calls = [0]
@@ -114,14 +132,18 @@ def rate_limiter(max_calls, period=1.0):
     return decorator
 
 def validate_email(email: str) -> bool:
-    """Simple email validator."""
+    """
+    Simple email validator.
+    """
     pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
     valid = re.match(pattern, email) is not None
     logger.info({"msg": f"Email validation for {email}: {valid}"})
     return valid
 
 def validate_positive_number(value) -> bool:
-    """Check if value is a positive number."""
+    """
+    Check if value is a positive number.
+    """
     valid = isinstance(value, (int, float)) and value > 0
     logger.info({"msg": f"Positive number validation for {value}: {valid}"})
     return valid
@@ -140,5 +162,9 @@ if __name__ == "__main__":
         logger.info({"msg": "Function called"})
     test_func()
     test_func()
-    print(validate_email("test@example.com"))
-    print(validate_positive_number(42))
+    logger.info({"msg": f"Email valid: {validate_email('test@example.com')}"})
+    logger.info({"msg": f"Positive number valid: {validate_positive_number(42)}"})
+
+    # Example: MLflow experiment setup (optional)
+    # from src.mlflow_integration.mlflow_utils import setup_mlflow_tracking
+    # setup_mlflow_tracking(uri="http://localhost:5000", experiment_name="TidePricing")

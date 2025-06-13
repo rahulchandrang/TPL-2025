@@ -82,3 +82,38 @@ Contributions are welcome! Please submit a pull request or open an issue for dis
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
+### Logging and Monitoring
+
+- The project uses structured JSON logging for all modules, configured via `config/logging.yaml`.
+- Logs can be integrated with Azure Application Insights for production monitoring (see `src/utils/logger.py`).
+
+### Error Handling
+
+- Custom exceptions, retry decorators, and a circuit breaker pattern are implemented in `src/utils/error_handler.py`.
+- A global exception handler ensures all uncaught exceptions are logged.
+
+### Secure Configuration Management
+
+- Secrets and sensitive configuration are managed using Azure Key Vault via `src/utils/credentials_manager.py`.
+- Environment variables can be loaded from `.env` files or directly from Key Vault.
+
+### Utility Modules
+
+- Common utilities such as rate limiting, data validation, and security helpers are provided in `src/utils/utility.py`.
+
+### MLflow Experiment Tracking
+
+- MLflow is used for experiment tracking and model management.
+- Configuration and logging utilities are in `src/mlflow_integration/mlflow_utils.py`.
+- The `MLproject` file defines MLflow entry points for training and serving.
+
+### CI/CD
+
+- Automated testing and deployment are configured via GitHub Actions in `.github/workflows/ci-cd.yml`.
+
+### Project Initialization
+
+- Use `project_setup.py` to automatically create the project folder structure and demonstrate logging, error handling, and utility usage.
