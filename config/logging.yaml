@@ -1,0 +1,22 @@
+loggers:
+  default:
+    level: INFO
+    handlers: [console, file]
+    propagate: no
+
+  console:
+    class: logging.StreamHandler
+    formatter: json
+
+  file:
+    class: logging.FileHandler
+    filename: logs/application.log
+    formatter: json
+
+formatters:
+  json:
+    format: '{"time": "%(asctime)s", "level": "%(levelname)s", "message": "%(message)s", "correlation_id": "%(correlation_id)s"}'
+
+root:
+  level: INFO
+  handlers: [console, file]

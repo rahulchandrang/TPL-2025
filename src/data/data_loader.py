@@ -1,12 +1,21 @@
 class DataLoader:
-    def __init__(self, raw_data_path, processed_data_path):
-        self.raw_data_path = raw_data_path
-        self.processed_data_path = processed_data_path
+    def __init__(self, config):
+        self.config = config
 
-    def load_raw_data(self):
+    def load_raw_data(self, file_path):
         import pandas as pd
-        return pd.read_csv(self.raw_data_path)
+        try:
+            data = pd.read_csv(file_path)
+            return data
+        except Exception as e:
+            from src.utils.error_handler import handle_error
+            handle_error(e)
 
-    def load_processed_data(self):
+    def load_processed_data(self, file_path):
         import pandas as pd
-        return pd.read_csv(self.processed_data_path)
+        try:
+            data = pd.read_csv(file_path)
+            return data
+        except Exception as e:
+            from src.utils.error_handler import handle_error
+            handle_error(e)

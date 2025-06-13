@@ -1,0 +1,14 @@
+name: GlobalMart Tide Dynamic Pricing
+conda_env: tide_dynamic_pricing_env
+entry_points:
+  main:
+    command: "python src/pipelines/train_pipeline.py"
+    parameters:
+      model_type: "linear_regression"
+      hyperparameters:
+        learning_rate: 0.01
+        n_estimators: 100
+  serve:
+    command: "python src/models/model.py"
+    parameters:
+      model_path: "models/tide_pricing_model.pkl"

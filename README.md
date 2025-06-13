@@ -1,57 +1,56 @@
-# Tide Dynamic Pricing Model
+# GlobalMart Tide Dynamic Pricing Project
 
 ## Overview
-The Tide Dynamic Pricing Model project aims to develop a machine learning model that optimizes pricing strategies based on various factors such as demand, competition, and customer behavior. This project utilizes AI-assisted development tools to streamline the machine learning development pipeline.
+This project implements a dynamic pricing model for Tide products at GlobalMart. The model leverages historical sales data, market trends, and customer behavior to optimize pricing strategies, aiming to maximize revenue while remaining competitive in the market.
 
 ## Project Structure
-The project is organized into the following directories and files:
+The project follows a standardized machine learning project structure, which includes the following directories and files:
 
-- **data/**: Contains raw and processed data files.
-  - **raw/**: Directory for raw data files used for training and testing.
-  - **processed/**: Directory for processed data files ready for analysis and modeling.
-  - **README.md**: Documentation on the data structure, sources, and preprocessing steps.
+- **config/**: Contains configuration files for the project.
+  - `config.yaml`: Model parameters and environment settings.
+  - `logging.yaml`: Logging configuration.
 
-- **notebooks/**: Contains Jupyter notebooks for exploratory data analysis.
-  - **exploratory_analysis.ipynb**: Notebook for visualizing data distributions and understanding feature relationships.
+- **credentials/**: Contains secure credential management files.
+  - `.env.example`: Template for environment variables.
+
+- **data/**: Directory for storing datasets.
+  - `raw/`: Raw data files.
+  - `processed/`: Processed data files.
+  - `external/`: External data sources.
+
+- **notebooks/**: Jupyter notebooks for exploratory data analysis.
+  - `exploratory_analysis.ipynb`: Contains visualizations and insights.
 
 - **src/**: Source code for the project.
-  - **config/**: Configuration settings for the project.
-    - **config.yaml**: YAML file with paths to data, model parameters, and environment-specific settings.
-  - **data/**: Data loading functionality.
-    - **data_loader.py**: Class for loading raw and processed datasets.
-  - **features/**: Feature engineering functionality.
-    - **feature_engineering.py**: Function for creating features from raw data.
-  - **models/**: Model definition and training.
-    - **model.py**: Class for the dynamic pricing model.
-    - **train.py**: Training pipeline for the model.
-  - **evaluation/**: Model evaluation functionality.
-    - **evaluate.py**: Function for evaluating model performance.
-  - **inference/**: Inference functionality.
-    - **predict.py**: Function for making predictions with the trained model.
-  - **utils/**: Utility functions used throughout the project.
-    - **helpers.py**: Various helper functions for data preprocessing and logging.
+  - `data/`: Data loading utilities.
+    - `data_loader.py`: Class for loading datasets.
+  - `features/`: Feature engineering utilities.
+    - `feature_engineering.py`: Class for feature extraction and transformation.
+  - `models/`: Machine learning models.
+    - `model.py`: Class for training and predicting with the pricing model.
+  - `pipelines/`: Data processing and model training pipelines.
+    - `train_pipeline.py`: Orchestrates the training process.
+  - `utils/`: Utility functions and classes.
+    - `logger.py`: Structured logging utilities.
+    - `error_handler.py`: Error handling mechanisms.
+    - `credentials_manager.py`: Secure credential management.
+  - `mlflow_integration/`: Integration with MLflow for experiment tracking.
+    - `mlflow_utils.py`: Functions for logging experiments and metrics.
 
 - **tests/**: Unit tests for the project.
-  - **test_data_loader.py**: Tests for the DataLoader class.
-  - **test_feature_engineering.py**: Tests for feature engineering functions.
-  - **test_model.py**: Tests for the DynamicPricingModel class.
-  - **test_evaluate.py**: Tests for evaluation functions.
+  - `test_model.py`: Tests for the PricingModel class.
 
-- **scripts/**: Automation scripts for training and inference.
-  - **run_training.sh**: Shell script to automate the training process.
-  - **run_inference.sh**: Shell script to automate the inference process.
-
-- **requirements.txt**: Lists the Python dependencies required for the project.
+- **requirements.txt**: Lists the dependencies required for the project.
 
 - **.gitignore**: Specifies files and directories to be ignored by Git.
 
-- **.env.example**: Example of environment variables needed for the project.
+- **MLproject**: Defines the project for MLflow, specifying entry points and parameters.
 
 ## Setup Instructions
 1. Clone the repository:
    ```
-   git clone <repository-url>
-   cd tide-dynamic-pricing-ml
+   git clone https://github.com/yourusername/globalmart-tide-dynamic-pricing.git
+   cd globalmart-tide-dynamic-pricing
    ```
 
 2. Create a virtual environment and activate it:
@@ -65,21 +64,21 @@ The project is organized into the following directories and files:
    pip install -r requirements.txt
    ```
 
-4. Set up environment variables by copying `.env.example` to `.env` and modifying as needed.
+4. Set up environment variables:
+   - Copy `.env.example` to `.env` and fill in the required credentials.
 
-## Usage Guidelines
-- To run the training process, execute the following command:
-  ```
-  ./scripts/run_training.sh
-  ```
+5. Run the exploratory analysis notebook to understand the data:
+   - Open `notebooks/exploratory_analysis.ipynb` in Jupyter Notebook.
 
-- To make predictions using the trained model, execute:
-  ```
-  ./scripts/run_inference.sh
-  ```
+6. Train the dynamic pricing model:
+   - Execute the training pipeline by running `src/pipelines/train_pipeline.py`.
 
-## Contribution
-Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
+## Usage
+- Use the `PricingModel` class in `src/models/model.py` to train and make predictions.
+- Utilize MLflow for tracking experiments and metrics.
+
+## Contributing
+Contributions are welcome! Please submit a pull request or open an issue for discussion.
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
