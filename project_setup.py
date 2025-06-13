@@ -148,9 +148,33 @@ def validate_positive_number(value) -> bool:
     logger.info({"msg": f"Positive number validation for {value}: {valid}"})
     return valid
 
+def check_raw_data_files(required_files=None):
+    """
+    Checks if required raw data files exist in data/raw.
+    """
+    if required_files is None:
+        required_files = [
+            "competitor_data_dictionary.csv",
+            "customer_behavior_data_dictionary.csv",
+            "inventory_data_dictionary.csv",
+            "sales_data_dictionary.csv"
+        ]
+    raw_dir = os.path.join("data", "raw")
+    missing = [f for f in required_files if not os.path.exists(os.path.join(raw_dir, f))]
+    if missing:
+        logger.warning({"msg": f"Missing raw data files: {missing}"})
+    else:
+        logger.info({"msg": "All required raw data files are present."})
+
 # --- Example Usage ---
 if __name__ == "__main__":
     create_project_structure()
+    check_raw_data_files()
+    # Raw data files should be placed in the data/raw directory.
+    # Example: Load a raw CSV file
+    # from src.data.data_loader import DataLoader
+    # df = DataLoader.load_csv("sales_data_dictionary.csv")
+    # logger.info({"msg": f"Loaded raw data with shape: {df.shape}"})
     # Example: Using Key Vault (replace with your vault URL and secret name)
     # vault_url = "https://<your-key-vault-name>.vault.azure.net/"
     # kv_manager = AzureKeyVaultManager(vault_url)

@@ -1,21 +1,27 @@
+import os
+import pandas as pd
+
+
 class DataLoader:
-    def __init__(self, config):
-        self.config = config
+    """
+    Utility class for loading raw data files from the data/raw directory.
+    """
 
-    def load_raw_data(self, file_path):
-        import pandas as pd
-        try:
-            data = pd.read_csv(file_path)
-            return data
-        except Exception as e:
-            from src.utils.error_handler import handle_error
-            handle_error(e)
+    RAW_DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "raw")
 
-    def load_processed_data(self, file_path):
-        import pandas as pd
-        try:
-            data = pd.read_csv(file_path)
-            return data
-        except Exception as e:
-            from src.utils.error_handler import handle_error
-            handle_error(e)
+    @staticmethod
+    def load_csv(filename):
+        """
+        Loads a CSV file from the data/raw directory.
+        """
+        file_path = os.path.join(DataLoader.RAW_DATA_DIR, filename)
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"{file_path} does not exist.")
+        return pd.read_csv(file_path)
+
+    @staticmethod
+    def list_raw_files():
+        """
+        Lists all files in the data/raw directory.
+        """
+        return os.listdir(DataLoader.RAW_DATA_DIR)
