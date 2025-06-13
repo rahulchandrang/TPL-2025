@@ -1,0 +1,7 @@
+{
+  "workspace_url": "https://<your-databricks-workspace-url>",
+  "token": "<your-databricks-access-token>",
+  "cluster_id": "<your-databricks-cluster-id>",
+  "notebook_path": "/<your-notebook-path>",
+  "job_name": "<your-job-name>"
+}
