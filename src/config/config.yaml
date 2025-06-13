@@ -1,0 +1,18 @@
+data_path: "data/"
+raw_data_path: "${data_path}raw/"
+processed_data_path: "${data_path}processed/"
+model:
+  type: "DynamicPricingModel"
+  parameters:
+    learning_rate: 0.01
+    n_estimators: 100
+    max_depth: 5
+evaluation:
+  metrics:
+    - name: "RMSE"
+      threshold: 0.1
+    - name: "Accuracy"
+      threshold: 0.95
+logging:
+  level: "INFO"
+  file: "logs/training.log"
