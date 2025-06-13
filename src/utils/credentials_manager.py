@@ -24,3 +24,18 @@ class CredentialsManager:
                         os.environ[key] = value
         else:
             raise FileNotFoundError(f"{env_file_path} not found.")
+
+    def load_secrets_to_env(self, secret_names):
+        """
+        Loads secrets from Azure Key Vault and sets them as environment variables.
+        :param secret_names: List of secret names to fetch from Key Vault.
+        """
+        for secret_name in secret_names:
+            secret_value = self.get_secret(secret_name)
+            os.environ[secret_name] = secret_value
+
+    def get_config(self, key, default=None):
+        """
+        Retrieves configuration from environment variables, falling back to default if not set.
+        """
+        return os.environ.get(key, default)
